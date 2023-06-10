@@ -2,8 +2,7 @@ name: Snake
 
 on:
   schedule:
-    - cron: '0 0 * * *'
-  workflow_dispatch:
+    - cron: "0 0 * * *"
 
 jobs:
   build:
@@ -11,14 +10,11 @@ jobs:
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
-      - name: Install dependencies
-        run: npm install
       - name: Generate snake game
-        run: |
-          npm install -g snk@2
-          npx snk@2 github_user_name=NikkiBht \
-            outputs="dist/github-contribution-grid-snake.svg, dist/github-contribution-grid-snake-dark.svg?palette=github-dark, dist/github-contribution-grid-snake.gif?color_snake=orange&color_dots=#bfd6f6,#8dbdff,#64a1f4,#4b91f1,#3c7dd9"
+        uses: Platane/snk@v2
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/github-contribution-grid-snake.svg
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
+            dist/github-contribution-grid-snake.gif?color_snake=orange&color_dots=#bfd6f6,#8dbdff,#64a1f4,#4b91f1,#3c7dd9
